@@ -1,0 +1,19 @@
+CREATE TABLE Cars(id INTEGER PRIMARY KEY AUTO_INCREMENT, firm VARCHAR(50), countryOfOrigin VARCHAR(50), listOfSellers VARCHAR(50));
+ 
+CREATE TABLE Sellers(id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), country VARCHAR(50), listOfModels VARCHAR(50), FOREIGN KEY (name) REFERENCES Cars (listOfSellers));
+ 
+CREATE TABLE Models(id INTEGER PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), price INTEGER, listOfColors VARCHAR(50), FOREIGN KEY (name) REFERENCES Sellers (listOfModels));
+ 
+INSERT INTO Cars (id, firm, countryOfOrigin, listOfSellers) VALUES (1, "audi", "aus", "audi-north"), (2, "audi", "ger", "audi-east"), (3, "audi", "ger", "daimler"), (4, "opel", "ger", "daimler"), (5, "renault", "fr", "labaguette"), (6, "renault", "fr", "ren-pej"), (7, "lada", "rus", "lada-huyada"), (8, "lada", "rus", "vedro"), (9, "chevrolet", "usa", "chev-north");
+ 
+INSERT INTO Sellers (id, name, country, listOfModels) VALUES (1, "audi-north", "rus", "a6"),(2, "audi-north", "gb", "a7"), (3, "audi-east", "gb", "a7"), (4, "daimler", "ger", "a7"), (5, "daimler", "ger", "corsa"), (6, "daimler", "ger", "omega"), (7, "labaguette", "fr", "sandero"), (8, "labaguette", "fr", "logan"), (9, "ren-pej", "fr", "logan"), (10, "lada-huyada", "rus", "vesta"), (11, "lada-huyada", "rus", "kalina"), (12, "vedro", "rus", "kalina"), (13, "vedro", "rus", "chetyrka"), (14, "chev-north", "ua", "corvette"), (15, "chev-north", "ua", "camaro");
+ 
+INSERT INTO Models (id, name, price, listOfColors) VALUES (1, "a6", 50000, "red"), (2, "a6", 50000, "blue"), (3, "a6", 50000, "brown"), (4, "a7", 75000, "red"), (5, "a7", 80000, "white"), (6, "corsa", 90000, "black"), (7, "corsa", 95000, "grey"), (8, "omega", 133700, "grey"), (9, "omega", 133700, "black"), (10, "omega", 133700, "pink"), (11, "sandero", 150000, "brown"), (12, "a6", 150000, "cyan"), (13, "logan", 125000, "red"), (14, "logan", 125000, "blue"), (15, "logan", 125000, "yellow"), (16, "vesta", 130000, "grey"), (17, "vesta", 130000, "white"), (18, "kalina", 5000, "black"), (19, "chetyrka", 2500, "black"), (20, "corvette", 100500, "red"), (21, "corvette", 100500, "white"), (22, "camaro", 100505, "blue");
+ 
+ # Вот сюда копировать создание таблиц и после них запрос: https://paiza.io/en/projects/new?language=mysql
+ 
+1) SELECT firm FROM Cars GROUP BY firm ORDER BY COUNT(firm) DESC LIMIT 1;
+2) SELECT COUNT(DISTINCT Sellers.country) FROM Sellers, Cars WHERE Sellers.name = Cars.listOfSellers AND Cars.firm ="audi";
+3) SELECT listOfSellers FROM Cars WHERE firm='audi';
+4) SELECT name FROM Models WHERE price<'80001' GROUP BY name;
+5) SELECT name FROM Sellers WHERE listOfModels IN (SELECT name FROM Models WHERE name='a7');
